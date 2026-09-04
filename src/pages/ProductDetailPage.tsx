@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import Button from '../components/Button';
 import QuantitySelector from '../components/QuantitySelector';
 import { getProductoById } from '../services/productos';
+import { registrarVista } from '../services/vistas';
 import { formatPrice } from '../utils/format';
 import { useCart } from '../context/CartContext';
 import type { Product } from '../types';
@@ -23,7 +24,10 @@ export default function ProductDetailPage() {
   useEffect(() => {
     if (!id) return;
     getProductoById(id)
-      .then(setProduct)
+      .then((data) => {
+        setProduct(data);
+        if (data) registrarVista(data.id);
+      })
       .finally(() => setLoading(false));
   }, [id]);
 

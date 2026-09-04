@@ -1,0 +1,138 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.pageTitle {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--color-white);
+}
+
+@media (min-width: 768px) {
+  .pageTitle { font-size: 1.5rem; }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  background-color: #2a2a2a;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
+
+/* Cards */
+.card {
+  background-color: #1A1A1A;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--color-white);
+  margin-bottom: 1rem;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-gray);
+}
+
+/* Barras de vistas por categoría */
+.barList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 120px 1fr 40px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .barRow { grid-template-columns: 160px 1fr 48px; }
+}
+
+.barLabel {
+  font-size: 0.8rem;
+  color: var(--color-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barTrack {
+  height: 10px;
+  background-color: #2a2a2a;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background-color: var(--color-accent);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.barValue {
+  font-size: 0.8rem;
+  color: var(--color-gray);
+  text-align: right;
+}
+
+/* Tabla vistas por producto */
+.tableWrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+}
+
+.table thead tr { background-color: #222222; }
+
+.table th {
+  padding: 0.75rem 0.85rem;
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid #2a2a2a;
+  white-space: nowrap;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #222222;
+  transition: background-color 0.15s;
+}
+.table tbody tr:hover { background-color: #222222; }
+.table tbody tr:last-child { border-bottom: none; }
+
+.table td {
+  padding: 0.8rem 0.85rem;
+  font-size: 0.83rem;
+  color: var(--color-white);
+}
+
+.tdProducto  { font-weight: 500; }
+.tdCategoria { color: var(--color-gray); }
+.tdVistas    { color: var(--color-accent); font-weight: 500; }

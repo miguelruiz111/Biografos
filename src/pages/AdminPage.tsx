@@ -2,19 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Package, ShoppingBag, CheckSquare, LogOut } from 'lucide-react';
+import { Package, ShoppingBag, CheckSquare, BarChart3, LogOut } from 'lucide-react';
 import AdminProductos from './admin/AdminProductos';
 import AdminVentas from './admin/AdminVentas';
 import AdminTareas from './admin/AdminTareas';
+import AdminEstadisticas from './admin/AdminEstadisticas';
 import { useAuth } from '../context/AuthContext';
 import styles from './admin/AdminPage.module.css';
 
-type Seccion = 'productos' | 'ventas' | 'tareas';
+type Seccion = 'productos' | 'ventas' | 'tareas' | 'estadisticas';
 
 const NAV_ITEMS: { key: Seccion; label: string; icon: React.ReactNode }[] = [
-  { key: 'productos', label: 'Productos', icon: <Package size={16} /> },
-  { key: 'ventas',   label: 'Ventas',    icon: <ShoppingBag size={16} /> },
-  { key: 'tareas',   label: 'Tareas',    icon: <CheckSquare size={16} /> },
+  { key: 'productos',    label: 'Productos',     icon: <Package size={16} /> },
+  { key: 'ventas',       label: 'Ventas',        icon: <ShoppingBag size={16} /> },
+  { key: 'tareas',       label: 'Tareas',        icon: <CheckSquare size={16} /> },
+  { key: 'estadisticas', label: 'Estadísticas',  icon: <BarChart3 size={16} /> },
 ];
 
 export default function AdminPage() {
@@ -22,16 +24,20 @@ export default function AdminPage() {
   const navigate = useNavigate();
   const [seccion, setSeccion] = useState<Seccion>('productos');
 
+  // DEV: permite ver el panel sin login mientras no hay Supabase real conectado en localhost.
+  // import.meta.env.DEV es false en el build de producción, así que esta rama se elimina sola.
+  const skipAuth = import.meta.env.DEV;
+
   useEffect(() => {
-    if (!loading && !user) navigate('/login');
-  }, [loading, user, navigate]);
+    if (!loading && !user && !skipAuth) navigate('/login');
+  }, [loading, user, skipAuth, navigate]);
 
   const handleLogout = async () => {
     await logout();
     navigate('/login');
   };
 
-  if (loading || !user) return null;
+  if (loading || (!user && !skipAuth)) return null;
 
   return (
     <div className={styles.layout}>
@@ -86,9 +92,10 @@ export default function AdminPage() {
 
       {/* ── Contenido de la sección activa ── */}
       <main className={styles.main}>
-        {seccion === 'productos' && <AdminProductos />}
-        {seccion === 'ventas'   && <AdminVentas />}
-        {seccion === 'tareas'   && <AdminTareas />}
+        {seccion === 'productos'    && <AdminProductos />}
+        {seccion === 'ventas'       && <AdminVentas />}
+        {seccion === 'tareas'       && <AdminTareas />}
+        {seccion === 'estadisticas' && <AdminEstadisticas />}
       </main>
 
     </div>
